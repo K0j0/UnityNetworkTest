@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Text.RegularExpressions;
 
-public class CubeScript : MonoBehaviour {
+public class NetScript : MonoBehaviour {
 	public bool isServer;
 	public bool localServer;
 	bool useNat;
