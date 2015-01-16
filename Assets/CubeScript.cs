@@ -4,7 +4,9 @@ using System.Text.RegularExpressions;
 
 public class CubeScript : MonoBehaviour {
 	public bool isServer;
+	public bool localServer;
 	bool useNat;
+
 
 	// Use this for initialization
 	void Start () {
@@ -24,16 +26,12 @@ public class CubeScript : MonoBehaviour {
 		} else{
 			// connect to my mac
 			if(onWindows){
-				// local
-				if(useNat) Network.Connect("192.168.0.15", 8001);				
-				// over the internet
+				if(localServer) Network.Connect("192.168.0.11", 8001);
 				else;
 			}
 			// connect to my PC
 			else if(onMac){
-				// local
-				if(useNat) Network.Connect("192.168.0.11", 8001);
-				// over the internet
+				if(localServer) Network.Connect("192.168.0.15", 8001);
 				else;
 			}
 			
