@@ -6,9 +6,6 @@
 [Ll]ibrary
 [Bb]uilds/
 
-#Scripts is a separate repo
-Assets/Scripts/
-Assets/TF-BM_Scripts/
 
 #Scenes for local development
 Assets/KojoFiles/MyScenes/
