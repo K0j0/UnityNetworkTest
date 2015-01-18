@@ -2,14 +2,15 @@
 using System.Collections;
 
 public class GameManager : MonoBehaviour {
+	public GameObject gallery;
 
-	// Use this for initialization
-	void Start () {
-	
+	public void makeServerRequest(){
+		networkView.RPC ("requestShowGallery", RPCMode.Server, true);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	[RPC]
+	public void showGallery(bool value){
+		gallery.SetActive (value);
 	}
+
 }

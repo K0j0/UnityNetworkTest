@@ -19,7 +19,11 @@ public class ServerManager : MonoBehaviour {
 	}
 	
 	void OnPlayerConnected(NetworkPlayer player) {
-		Debug.Log(Network.connections.Length + " total players");
-		
+		Debug.Log(Network.connections.Length + " total players");		
+	}
+
+	[RPC]
+	void requestShowGallery(bool value){
+		networkView.RPC ("showGallery", RPCMode.All, true);
 	}
 }
