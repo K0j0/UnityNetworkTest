@@ -9,11 +9,17 @@ public class ServerManager : MonoBehaviour {
 		useNat = !Network.HavePublicAddress();
 		Debug.Log("Has public ip? " + Network.HavePublicAddress() + " Use NAT? " + useNat);
 		Network.InitializeServer(8, 8001, useNat);
-		MasterServer.RegisterHost("KojoTest", "game1");
+		MasterServer.RegisterHost("KojoProto", "game1");
 	}
 	
 	void OnServerInitialized() {
 		Debug.Log("Server initialized and ready");
 		Debug.Log("My external ip address is " + Network.player.externalIP);
+		Debug.Log(Network.connections.Length + " total players");
+	}
+	
+	void OnPlayerConnected(NetworkPlayer player) {
+		Debug.Log(Network.connections.Length + " total players");
+		
 	}
 }
