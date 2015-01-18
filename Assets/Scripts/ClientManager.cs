@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Text.RegularExpressions;
 
 public class ClientManager : MonoBehaviour {
 
 	public bool localServer;
-	
+	public Button connectButton;
+	HostData gameData;
+
 	void Awake() {
 		Debug.Log ("My os is " + SystemInfo.operatingSystem);
 		Debug.Log("My ip address is " + Network.player.ipAddress);
@@ -21,31 +24,33 @@ public class ClientManager : MonoBehaviour {
 		Debug.Log ("On windows? " + onWindows + " On a Mac? " + onMac);
 		
 		// connect to my mac
-		if(onWindows){
-			if(localServer) Network.Connect("192.168.0.11", 8001);
-			else connectToNAT();
+		if (localServer) {
+			if (onWindows) Network.Connect ("192.168.0.11", 8001);
+			else if (onMac) Network.Connect ("192.168.0.15", 8001);
 		}
-		// connect to my PC
-		else if(onMac){
-			if(localServer) Network.Connect("192.168.0.15", 8001);
-			else connectToNAT();
-		}
-	}
-	
-	void connectToNAT(){
-	
 	}
 	
 	void Update() {
-		Debug.Log(Time.realtimeSinceStartup);
+		//Debug.Log(Time.realtimeSinceStartup);
 		if (MasterServer.PollHostList().Length != 0) {
 			HostData[] hostData = MasterServer.PollHostList();
 			int i = 0;
-			while (i < hostData.Length) {
+			while (i < hostData.Length) { // there should only be 1 game
 				Debug.Log("Game name: " + hostData[i].gameName);
-				i++;
+				Text buttonText = connectButton.GetComponentInChildren<Text>();
+				buttonText.text = "Connect to " + hostData[i].gameName;
+				gameData = hostData[i];
+				break;
 			}
 			MasterServer.ClearHostList();
 		}
+	}
+
+	public void connectWithNAT(){
+		Network.Connect (gameData);
+	}
+
+	void OnConnectedToServer(){
+		connectButton.gameObject.SetActive(false);
 	}
 }
